@@ -1,0 +1,867 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -ms-content-zooming: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+#pano {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* --- NEW TITLE BAR STYLES (KEPT AS REQUESTED) --- */
+#titleBar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: auto;
+  width: auto;
+  max-width: calc(100% - 100px);
+  height: auto;
+  text-align: left;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#titleBar .sceneName {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+}
+
+.mobile #titleBar {
+  top: 10px;
+  left: 10px;
+}
+
+/* If there is a fullscreen button the title bar must make space for it */
+body.fullscreen-enabled #titleBar {
+  right: 80px;
+}
+
+body.fullscreen-enabled.mobile #titleBar {
+  right: 100px;
+}
+
+/* Removed multiple-scenes offset - we want consistent 10px margin */
+
+.mobile #titleBar .sceneName {
+  line-height: 40px;
+}
+
+
+
+#autorotateToggle {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+.mobile #autorotateToggle {
+  width: 50px;
+  height: 50px;
+}
+
+/* If there is a fullscreen button, autorotate must placed a bit to the left */
+body.fullscreen-enabled #autorotateToggle {
+  right: 40px;
+}
+
+body.fullscreen-enabled.mobile #autorotateToggle {
+  right: 50px;
+}
+
+#autorotateToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #autorotateToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#autorotateToggle .icon.on {
+  display: none;
+}
+
+#autorotateToggle .icon.off {
+  display: block;
+}
+
+#autorotateToggle.enabled .icon.on {
+  display: block;
+}
+
+#autorotateToggle.enabled .icon.off {
+  display: none;
+}
+
+#sceneListToggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+.mobile #sceneListToggle {
+  width: 50px;
+  height: 50px;
+}
+
+#sceneListToggle .text {
+  position: absolute;
+  top: 5px;
+  left: 15px;
+  width: 100%;
+  line-height: 30px;
+}
+
+#sceneListToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #sceneListToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#sceneListToggle .icon.on {
+  display: none;
+}
+
+#sceneListToggle .icon.off {
+  display: block;
+}
+
+#sceneListToggle.enabled .icon.on {
+  display: block;
+}
+
+#sceneListToggle.enabled .icon.off {
+  display: none;
+}
+
+#sceneList {
+  position: absolute;
+  top: 0;
+  left: -220px;
+  padding-top: 40px;
+  width: 220px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 0;
+  -webkit-transition: margin-left 0.5s ease-in-out;
+  transition: margin-left 0.5s ease-in-out;
+}
+
+.mobile #sceneList {
+  padding-top: 50px;
+}
+
+#sceneList .scenes {
+  width: 100%;
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+}
+
+.mobile #sceneList {
+  width: 100%;
+  height: 100%;
+  left: -100%;
+}
+
+.mobile #sceneList.enabled {
+  margin-left: 100%;
+}
+
+.mobile #sceneList .scenes {
+  height: 100%;
+}
+
+#sceneList.enabled {
+  margin-left: 220px;
+}
+
+#sceneList .scene {
+  display: block;
+  width: 100%;
+  height: 30px;
+}
+
+.mobile #sceneList .scene {
+  height: 40px;
+}
+
+#sceneList .scene .text {
+  width: 100%;
+  height: 100%;
+  padding: 0 15px;
+  line-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile #sceneList .scene .text {
+  line-height: 40px;
+}
+
+.no-touch #sceneList .scene:hover {
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+#sceneList .scene.current {
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+/* Hide scene list when only a single scene exists */
+body.single-scene #sceneList,
+body.single-scene #sceneListToggle {
+  display: none;
+}
+
+/* Link hotspot - Glassmorphism Circle Design */
+
+.link-hotspot {
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  opacity: 0.9;
+  /* NO transitions - they cause delay when Marzipano repositions hotspots */
+}
+
+.no-touch .link-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .link-hotspot {
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+/* Glassmorphism Circle Container */
+.link-hotspot-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+
+  /* Apply Glass Style matching HUD buttons */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Center the icon inside */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  /* NO transitions - instant response needed */
+}
+
+.no-touch .link-hotspot:hover .link-hotspot-circle {
+  background: rgba(50, 50, 50, 0.8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Walking Icon Inside Circle */
+.link-hotspot-icon {
+  width: 50%;
+  height: 50%;
+  pointer-events: none;
+
+  /* Make SVG white to match HUD buttons */
+  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.link-hotspot-tooltip {
+  position: absolute;
+  left: 100%;
+  top: 14px;
+  /* ( 60 - (16 + 2*8) ) / 2 */
+
+  margin-left: 3px;
+
+  font-size: 16px;
+
+  max-width: 300px;
+
+  padding: 8px 10px;
+
+  border-radius: 5px;
+
+  background-color: rgb(58, 68, 84);
+  background-color: rgba(58, 68, 84, 0.8);
+
+  color: #fff;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  -ms-transform: translateX(-8px);
+  -webkit-transform: translateX(-8px);
+  transform: translateX(-8px);
+
+  -webkit-transition: -ms-transform 0.3s,
+    -webkit-transform 0.3s,
+    transform 0.3s,
+    opacity 0.3s;
+  transition: -ms-transform 0.3s,
+    -webkit-transform 0.3s,
+    transform 0.3s,
+    opacity 0.3s;
+}
+
+.mobile .link-hotspot {
+  top: 19px;
+  /* ( 70 - (16 + 2*8) ) / 2 */
+}
+
+.no-touch .link-hotspot:hover .link-hotspot-tooltip {
+  opacity: 1;
+  -ms-transform: translateX(0);
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+/* Prevent tooltip from triggering */
+.link-hotspot-tooltip {
+  pointer-events: none;
+}
+
+.no-touch .link-hotspot:hover .link-hotspot-tooltip {
+  pointer-events: all;
+}
+
+/* Fallback mode without pointer-events (IE8-10) */
+.tooltip-fallback .link-hotspot-tooltip {
+  display: none;
+}
+
+.no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip {
+  display: block;
+}
+
+/* Info hotspot - Glassmorphism Circle Design */
+
+.info-hotspot {
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+  opacity: 0.9;
+  /* NO transitions - instant response */
+}
+
+.no-touch .info-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .info-hotspot {
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+/* Glassmorphism Circle Container for Info Hotspot */
+.info-hotspot-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+
+  /* Apply Glass Style matching navigation hotspots */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+  /* Center the icon inside */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.no-touch .info-hotspot:hover .info-hotspot-circle {
+  background: rgba(50, 50, 50, 0.8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Info Icon Inside Circle */
+.info-hotspot-icon {
+  width: 50%;
+  height: 50%;
+  pointer-events: none;
+
+  /* Make SVG white to match other hotspots */
+  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Info Modal Panel - Glassmorphism Design (matching HUD buttons) */
+.info-hotspot-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 90%;
+  max-width: 500px;
+  max-height: 70%;
+
+  /* Glassmorphism panel - EXACT same style as HUD buttons */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  /* Hidden by default */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: all 0.3s ease;
+
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.info-hotspot-modal.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: all;
+}
+
+/* Modal Header */
+.info-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(50, 50, 50, 0.05);
+  /* Much more transparent */
+}
+
+.info-modal-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.info-modal-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 32px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.7);
+
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.info-modal-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Modal Content */
+.info-modal-content {
+  padding: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-y: auto;
+  max-height: calc(70vh - 100px);
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Scrollbar styling for modal content */
+.info-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.info-modal-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.info-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.info-modal-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .info-hotspot-modal {
+    width: 95%;
+    max-height: 80%;
+  }
+
+  .info-modal-header {
+    padding: 16px 20px;
+  }
+
+  .info-modal-title {
+    font-size: 18px;
+  }
+
+  .info-modal-content {
+    padding: 20px;
+    font-size: 15px;
+  }
+}
+
+/* View control buttons */
+
+.viewControlButton {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103, 115, 131);
+  background-color: rgba(103, 115, 131, 0.8);
+}
+
+body.view-control-buttons .viewControlButton {
+  display: block;
+}
+
+/* Hide controls when width is too small */
+@media (max-width: 600px) {
+  body.view-control-buttons .viewControlButton {
+    display: none;
+  }
+}
+
+.viewControlButton .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+/* Center is at margin-left: -20px */
+.viewControlButton-1 {
+  margin-left: -145px;
+}
+
+.viewControlButton-2 {
+  margin-left: -95px;
+}
+
+.viewControlButton-3 {
+  margin-left: -45px;
+}
+
+.viewControlButton-4 {
+  margin-left: 5px;
+}
+
+.viewControlButton-5 {
+  margin-left: 55px;
+}
+
+.viewControlButton-6 {
+  margin-left: 105px;
+}
+
+/* --- BOTTOM RIGHT CONTROLS --- */
+
+/* Shared Glass Style for Buttons (Matches Title Bar) */
+.glass-button {
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+  background: rgba(50, 50, 50, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Time Travel Button */
+#timeTravelToggle {
+  /* Always visible */
+  display: flex !important;
+  position: absolute;
+  bottom: 20px;
+  right: 140px;
+  /* Positioned to the left of Gyro (80px + 50px + 10px gap) */
+  left: auto;
+  transform: none;
+
+  height: 50px;
+  padding: 0 20px;
+
+  /* Flex for centering text */
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+
+  z-index: 1000;
+
+  /* Apply Glass Style */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  transition: all 0.3s ease;
+
+  /* Disabled state by default */
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* When enabled class is added by JS */
+#timeTravelToggle.enabled {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: all;
+  animation: fadeInBright 0.5s ease-out;
+}
+
+/* No hover state - buttons should not change visually */
+
+@keyframes fadeInBright {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.mobile #timeTravelToggle {
+  bottom: 20px;
+  right: 140px;
+  font-size: 12px;
+  padding: 0 15px;
+}
+
+/* Gyroscope Toggle */
+#gyroscopeToggle {
+  display: block;
+  /* Always visible */
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  /* Positioned to the left of Fullscreen (20px + 50px + 10px gap) */
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+
+  z-index: 1000;
+
+  /* Apply Glass Style */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* No hover state - buttons should not change visually */
+
+#gyroscopeToggle .icon {
+  width: 100%;
+  height: 100%;
+  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Show only on touch devices or when forced */
+/* Show only on touch devices or when forced */
+.touch #gyroscopeToggle,
+.mobile #gyroscopeToggle,
+.touch #fullscreenToggle,
+.mobile #fullscreenToggle {
+  display: block;
+}
+
+.mobile #gyroscopeToggle {
+  width: 50px;
+  height: 50px;
+  bottom: 20px;
+  right: 80px;
+}
+
+/* Fullscreen Toggle */
+/* Fullscreen Toggle */
+#fullscreenToggle {
+  display: none;
+  /* Toggled by JS/CSS based on class */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  /* Rightmost position */
+  width: 50px;
+  height: 50px;
+  padding: 12px;
+
+  z-index: 1000;
+
+  /* Apply Glass Style */
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Ensure it's visible when fullscreen is enabled/available */
+body.fullscreen-enabled #fullscreenToggle {
+  display: block;
+}
+
+/* No hover state - buttons should not change visually */
+
+#fullscreenToggle .icon {
+  width: 100%;
+  height: 100%;
+  filter: invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.mobile #fullscreenToggle {
+  width: 50px;
+  height: 50px;
+  bottom: 20px;
+  right: 20px;
+}
